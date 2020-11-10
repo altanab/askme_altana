@@ -1,0 +1,16 @@
+{% extends "inc/base.html" %}
+{% load static %}
+
+
+{% block content %}
+<h2>Tag : {{ tag }}</h2>
+
+<ul class="list-unstyled">
+    {% for question in questions %}
+    <li>
+        {% include 'inc/one_question.html' %}
+    </li>
+    {% endfor %}
+</ul>
+{% include 'inc/pagination.html' with objects=questions %}
+{% endblock content %}

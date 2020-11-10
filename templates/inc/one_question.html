@@ -1,0 +1,36 @@
+{% load static %}
+<div class="card border-dark my-3">
+    <div class="row no-gutters">
+        <div class="col-md-3">
+            <img src="{% static "img/teapot1.png" %}" class="img-fluid mx-auto">
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <a href="{% url 'question' qid=question.id %}"><h4 class="card-title mb-0">{{ question.title }}</h4></a>
+                <div class="mb-1 text-muted">{{ question.data }}</div>
+            </div>
+            <div class="card-footer bg-transparent">
+                <span class="mr-3">
+                <button type="button" class="btn btn-link text-danger btn-sm p-0">▼</button>
+                    <span class="badge badge-light text-wrap mx-0">{{ question.rating }}</span>
+                <button type="button" class="btn btn-link text-success btn-sm p-0">▲</button>
+                </span>
+                <span class="mr-3">
+                    answers
+                    <span class="badge badge-primary">{{ question.num_answers }}</span>
+                </span>
+                <span class="mr-3">
+                    tags:
+                    {% for tag in question.tags %}
+                    <a href="{% url 'tag' sometag=tag.tag %}" class="text-decoration-none">{{ tag.tag }}</a>
+                    {% endfor %}
+                </span>
+                <span class="mr-3">
+                    author:
+                    <a>{{ question.author }}</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+

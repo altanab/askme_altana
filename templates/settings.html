@@ -1,0 +1,38 @@
+{% extends "inc/base.html" %}
+{% load static %}
+
+
+{% block content %}
+<h2 class="h3 mb-4">Settings: </h2>
+<form>
+    <div class="form-group row">
+        <label for="login_reg" class="col-sm-2 col-form-label">Login</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="login_reg" placeholder="dr_teapot">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="email_reg" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="email_reg" placeholder="dr_teapot@tea.com">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="nick_reg" class="col-sm-2 col-form-label">NickName</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="nick_reg" placeholder="dr_teapot">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="avatar_reg" class="col-sm-2 col-form-label">Upload avatar</label>
+        <div class="col-sm-10">
+            <ul class="list-inline">
+                <li class="list-inline-item"><img src="{% static 'img/teapot.png' %}"  width="120" height="120"></li>
+                <li class="list-inline-item"><input type="text" class="form-control" id="avatar_reg" placeholder="c:\dr_teapot.jpg"></li>
+                <li class="list-inline-item"><button type="submit" class="btn btn-sm btn-outline-primary">Upload</button></li>
+            </ul>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock content %}

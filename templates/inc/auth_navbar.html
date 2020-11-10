@@ -1,0 +1,17 @@
+{% load static %}
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link text-success" href="{% url 'new' %}">
+            <span class="border border-success rounded p-2">Ask!</span>
+        </a>
+    </li>
+    <li class="navbar-brand mr-0" href="{% url 'settings' %}">
+        <img src="{% static "img/teapot1.png" %}" width="35" height="35" loading="lazy">
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="{% url 'settings' %}">Tea Pot</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'index' %}">Log out</a>
+    </li>
+</ul>

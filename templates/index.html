@@ -1,0 +1,21 @@
+{% extends "inc/base.html" %}
+{% load static %}
+
+
+{% block content %}
+<ul class="list-inline mb-4">
+    <li class="list-inline-item"><h2>New Questions</h2></li>
+    <li class="list-inline-item"><h5><a href="{% url 'hot' %}"><u>Hot Questions</u></a></h5></li>
+</ul>
+
+<ul class="list-unstyled">
+    {% for question in questions %}
+    <li>
+        {% include 'inc/one_question.html' %}
+    </li>
+    {% endfor %}
+</ul>
+
+{% include 'inc/pagination.html' with objects=questions %}
+{% endblock content %}
+

@@ -1,0 +1,52 @@
+{% extends "inc/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h2 class="h3 mb-4">Registration</h2>
+<form>
+  <div class="form-group row">
+    <label for="login_reg" class="col-sm-2 col-form-label">Login</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="login_reg" placeholder="dr_teapot">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="email_reg" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="email_reg" placeholder="dr_teapot@tea.com">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="nick_reg" class="col-sm-2 col-form-label">NickName</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="nick_reg" placeholder="dr_teapot">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="pswd_reg" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" id="pswd_reg" class="form-control" aria-describedby="passwordHelpBlock" placeholder="********">
+      <small id="passwordHelpBlock" class="form-text text-muted">
+        Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+      </small>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="rep_pswd_reg" class="col-sm-2 col-form-label">Repeat password</label>
+    <div class="col-sm-10">
+      <input type="password" id="rep_pswd_reg" class="form-control" aria-describedby="passwordHelpBlock" placeholder="********">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="avatar_reg" class="col-sm-2 col-form-label">Upload avatar</label>
+    <div class="col-sm-10">
+      <ul class="list-inline">
+        <li class="list-inline-item"><input type="text" class="form-control" id="avatar_reg" placeholder="c:\dr_teapot.jpg"></li>
+        <li class="list-inline-item"><button type="submit" class="btn btn-sm btn-outline-primary">Upload</button></li>
+      </ul>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
+{% endblock content %}

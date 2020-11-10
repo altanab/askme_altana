@@ -1,0 +1,26 @@
+{% load static %}
+<div class="card border-secondary my-3">
+    <div class="row no-gutters">
+        <div class="col-md-2">
+            <img src="{% static "img/teapot1.png" %}" class="img-fluid mx-auto">
+                <div class="d-flex justify-content-center mt-2">
+                <button type="button" class="btn btn-link text-danger btn-sm p-0">▼</button>
+                    <span class="badge badge-light text-wrap mx-0">{{ answer.rating }}</span>
+                <button type="button" class="btn btn-link text-success btn-sm p-0">▲</button>
+                </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <p class="card-text">{{ answer.text }}</p>
+                <div class="text-muted">{{ answer.data }}</div>
+            </div>
+            <div class="card-footer bg-transparent  text-secondary">
+                <span class="mr-3">
+                    author:
+                    <a>{{ answer.author }}</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
