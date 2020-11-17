@@ -7,7 +7,7 @@
         <div class="col-md-9">
             <div class="card-body">
                 <a href="{% url 'question' qid=question.id %}"><h4 class="card-title mb-0">{{ question.title }}</h4></a>
-                <div class="mb-1 text-muted">{{ question.data }}</div>
+                <div class="mb-1 text-muted">{{ question.date_modified|date:"j M Y"}}</div>
             </div>
             <div class="card-footer bg-transparent">
                 <span class="mr-3">
@@ -21,8 +21,8 @@
                 </span>
                 <span class="mr-3">
                     tags:
-                    {% for tag in question.tags %}
-                    <a href="{% url 'tag' sometag=tag.tag %}" class="text-decoration-none">{{ tag.tag }}</a>
+                    {% for tag in question.tags.all %}
+                    <a href="{% url 'tag' sometag=tag %}" class="text-decoration-none">{{ tag }}</a>
                     {% endfor %}
                 </span>
                 <span class="mr-3">

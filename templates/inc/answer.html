@@ -12,9 +12,9 @@
         <div class="col-md-8">
             <div class="card-body">
                 <p class="card-text">{{ answer.text }}</p>
-                <div class="text-muted">{{ answer.data }}</div>
+                <div class="text-muted">{{ answer.date_modified|date:"j M Y" }} {{ answer.date_modified|time:"H:i" }}</div>
             </div>
-            <div class="card-footer bg-transparent  text-secondary">
+            <div class="card-footer bg-transparent">
                 <span class="mr-3">
                     author:
                     <a>{{ answer.author }}</a>

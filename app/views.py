@@ -1,99 +1,61 @@
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from app.models import Profile, Question, Answer
+from django.contrib.auth.models import User
+from django.db.models import Count, Sum
 
-users = [
-    {
-        'name': f'Mr. TeaPot{idx}',
-
-    } for idx in range(4)
-]
-
-tags = [
-    {
-        'tag': f'tag{idx}',
-
-    } for idx in range(3)
-]
-
-questions = [
-    {
-        'id': idx,
-        'title': f'title {idx}',
-        'text': 'far from any road',
-        'tags': tags,
-        'rating': -2 + idx,
-        'num_answers': 3,
-        'author': 'Dr. Teapot',
-        'data': 'Nov 11',
-    } for idx in range(10)
-]
-
-
-answers = [
-    {
-        'id': idx,
-        'text': 'far from any road',
-        'rating': idx,
-        'author': 'Mr. Black',
-        'data': 'Dec 12',
-    } for idx in range(3)
-]
 
 def hot_questions(request):
+    questions = Question.objects.order_by_rating().all()
     questions_per_page = paginate(questions, request)
     return render(request, 'hot_questions.html', {
         'questions': questions_per_page,
-        'tags': tags,
-        'authors': users,
     })
 
+
 def new_question(request):
-    return render(request, 'new_question.html', {
-        'tags': tags,
-        'authors': users,})
+    return render(request, 'new_question.html', {})
+
 
 def login(request):
-    return render(request, 'login.html', {
-        'tags': tags,
-        'authors': users,})
+    return render(request, 'login.html', {})
+
 
 def signup(request):
-    return render(request, 'signup.html', {
-        'tags': tags,
-        'authors': users,})
+    return render(request, 'signup.html', {})
+
 
 def settings(request):
-    return render(request, 'settings.html', {
-        'tags': tags,
-        'authors': users,})
+    return render(request, 'settings.html', {})
+
 
 def question(request, qid):
-    question = questions[qid]
+    question = Question.objects.select_related().get(id=qid)
+    answers = question.answer_set.order_by('-rating').all()
     answers_per_page = paginate(answers, request)
     return render(request, 'question.html', {
         'question': question,
         'answers':answers_per_page,
-        'tags': tags,
-        'authors': users,
     })
 
+
 def tag_questions(request, sometag):
+    questions = Question.objects.filter_by_tag(sometag).all()
     questions_per_page = paginate(questions, request)
     return render(request, 'tag_questions.html', {
         'tag': sometag,
-        'questions' : questions_per_page,
-        'tags': tags,
-        'authors': users,
+        'questions': questions_per_page,
     })
 
+
 def index(request):
+    questions = Question.objects.order_by_date().all()
     questions_per_page = paginate(questions, request)
     return render(request, 'index.html', {
         'questions': questions_per_page,
-        'tags': tags,
-        'authors': users,
     })
+
 
 def paginate(objects_list, request, per_page=2):
     paginator = Paginator(objects_list, per_page)
