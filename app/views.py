@@ -57,7 +57,7 @@ def index(request):
     })
 
 
-def paginate(objects_list, request, per_page=2):
+def paginate(objects_list, request, per_page=10):
     paginator = Paginator(objects_list, per_page)
     page = request.GET.get('page')
     objects = paginator.get_page(page)
