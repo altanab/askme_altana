@@ -9,9 +9,9 @@
         <img src="{% static "img/teapot1.png" %}" width="35" height="35" loading="lazy">
     </li>
     <li class="nav-item">
-        <a class="nav-link active" href="{% url 'settings' %}">Tea Pot</a>
+        <a class="nav-link active" href="{% url 'settings' %}">{{request.user.username}}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'index' %}">Log out</a>
+        <a class="nav-link" href="{% url 'logout' %}?next={{request.path}}">Log out</a>
     </li>
 </ul>

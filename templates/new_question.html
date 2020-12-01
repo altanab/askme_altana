@@ -1,10 +1,22 @@
 {% extends "inc/base.html" %}
 {% load static %}
+{% load bootstrap4 %}
 
 
-{% block content %}<div class="mb-4">
+{% block content %}
+<div class="mb-4">
   <h2>New Question</h2>
 </div>
+<form class="form mt-5" method="POST" novalidate>
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">Ask!</button>
+  {% endbuttons %}
+</form>
+{% endblock content %}
+<!--
+
 <form class="needs-validation" novalidate>
   <div class="form-group row">
     <label for="TitleArea" class="col-sm-2 col-form-label">Title</label>
@@ -26,4 +38,4 @@
   </div>
   <button type="submit" class="btn btn-primary">Ask!</button>
 </form>
-{% endblock content %}
+-->

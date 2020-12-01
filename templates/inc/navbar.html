@@ -7,8 +7,11 @@
             <button class="btn btn-success my-2 my-sm-0" type="submit">Search!</button>
         </form>
 
-        {% include "inc/auth_navbar.html" %}
-
+        {% if request.user.is_authenticated %}
+            {% include "inc/auth_navbar.html" %}
+        {% else %}
+            {% include "inc/unauth_navbar.html" %}
+        {% endif %}
     </div>
 
 </nav>

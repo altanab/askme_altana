@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Sum, F
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class LikeDislikeManager(models.Manager):
@@ -32,7 +34,6 @@ class ProfileManager(models.Manager):
         return self.annotate(q_sum=Sum('question__rating'), a_sum=Sum('answer__rating')).order_by(-(F('q_sum') + F('a_sum')))
 
 
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='uploads/', blank=True, verbose_name='avatar')
@@ -47,13 +48,20 @@ class Profile(models.Model):
         verbose_name_plural = 'Profiles'
 
 
+@receiver(post_save, sender=User)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()
+
+
 class TagManager(models.Manager):
     def popular(self):
         return self.annotate(count=Count('question')).order_by('-count')
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=256, db_index=True, verbose_name='title')
+    title = models.CharField(max_length=256, unique=True, verbose_name='title')
 
     objects = TagManager()
 

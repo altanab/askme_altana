@@ -1,5 +1,6 @@
 {% extends "inc/base.html" %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block content %}
 <div class="card border-dark mt-3 mb-5">
@@ -43,12 +44,17 @@
     {% endfor %}
 </ul>
 {% include 'inc/pagination.html' with objects=answers %}
-<form class="mb-5">
-  <div class="form-group row">
-    <div class="col-sm-12">
-      <textarea class="form-control" id="AreaForAnswer" rows="5"></textarea>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Answer!</button>
-</form>
+
+{% if request.user.is_authenticated %}
+    <form class="form mb-5" method="POST" novalidate>
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+        <button type="submit" class="btn btn-primary">Answer!</button>
+      {% endbuttons %}
+    </form>
+{% else %}
+    <a href="{% url 'login' %}?next={{request.path}}">log in to answer</a>
+    <br>
+{% endif %}
 {% endblock content %}

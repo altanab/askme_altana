@@ -1,9 +1,26 @@
 {% extends "inc/base.html" %}
 {% load static %}
-
-
+{% load bootstrap4 %}
 {% block content %}
-<h2 class="h3 mb-4">Settings: </h2>
+{% for message in messages %}
+  <div class="alert alert-danger">
+    <a class="close" href="#" data-dismiss="alert">×</a>
+      {{ message }}
+  </div>
+{% endfor %}
+<h2 class="h3 mb-4">Settings</h2>
+<form class="form mt-5" method="POST" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">Save</button>
+  {% endbuttons %}
+</form>
+<br>
+{% endblock content %}
+
+<!--
 <form>
     <div class="form-group row">
         <label for="login_reg" class="col-sm-2 col-form-label">Login</label>
@@ -35,4 +52,4 @@
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
-{% endblock content %}
+-->
