@@ -19,3 +19,6 @@
 {% include 'inc/pagination.html' with objects=questions %}
 {% endblock content %}
 
+{% block jscode %}
+    <script src="{% static "js/votes.js" %}"></script>
+{% endblock jscode %}

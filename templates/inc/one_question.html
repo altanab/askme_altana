@@ -2,7 +2,7 @@
 <div class="card border-dark my-3">
     <div class="row no-gutters">
         <div class="col-md-3">
-            <img src="{% static "img/teapot1.png" %}" class="img-fluid mx-auto">
+            <img src={{ question.author.avatar.url }} class="img-fluid mx-auto">
         </div>
         <div class="col-md-9">
             <div class="card-body">
@@ -11,9 +11,9 @@
             </div>
             <div class="card-footer bg-transparent">
                 <span class="mr-3">
-                <button type="button" class="btn btn-link text-danger btn-sm p-0">▼</button>
-                    <span class="badge badge-light text-wrap mx-0">{{ question.rating }}</span>
-                <button type="button" class="btn btn-link text-success btn-sm p-0">▲</button>
+                    <a href="#" class="js-vote text-danger" data-action="dislike" data-qid="{{ question.id }}" data-type="question">▼</a>
+                    <span class="badge badge-light text-wrap mx-0" id="question_rating_{{ question.id }}">{{ question.rating }}</span>
+                    <a href="#" class="js-vote text-success" data-action="like" data-qid="{{ question.id }}" data-type="question">▲</a>
                 </span>
                 <span class="mr-3">
                     answers

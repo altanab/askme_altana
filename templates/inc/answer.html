@@ -2,11 +2,11 @@
 <div class="card border-secondary my-3">
     <div class="row no-gutters">
         <div class="col-md-2">
-            <img src="{% static "img/teapot1.png" %}" class="img-fluid mx-auto">
+            <img src={{ answer.author.avatar.url }} class="img-fluid mx-auto">
                 <div class="d-flex justify-content-center mt-2">
-                <button type="button" class="btn btn-link text-danger btn-sm p-0">▼</button>
-                    <span class="badge badge-light text-wrap mx-0">{{ answer.rating }}</span>
-                <button type="button" class="btn btn-link text-success btn-sm p-0">▲</button>
+                    <a href="#" class="js-vote text-danger" data-action="dislike" data-qid="{{ answer.id }}" data-type="answer">▼</a>
+                    <span class="badge badge-light text-wrap mx-0" id="answer_rating_{{ answer.id }}">{{ answer.rating }}</span>
+                    <a href="#" class="js-vote text-success" data-action="like" data-qid="{{ answer.id }}" data-type="answer">▲</a>
                 </div>
         </div>
         <div class="col-md-8">
@@ -15,6 +15,12 @@
                 <div class="text-muted">{{ answer.date_modified|date:"j M Y" }} {{ answer.date_modified|time:"H:i" }}</div>
             </div>
             <div class="card-footer bg-transparent">
+                <span class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    correct
+                  </label>
+                </span>
                 <span class="mr-3">
                     author:
                     <a>{{ answer.author }}</a>

@@ -19,10 +19,10 @@ class LikeDislikeManager(models.Manager):
 
 
 class LikeDislike(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='user')
     like = models.BooleanField(verbose_name='like')
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
@@ -36,7 +36,7 @@ class ProfileManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='uploads/', blank=True, verbose_name='avatar')
+    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='uploads/teapot2.png', verbose_name='avatar')
 
     objects = ProfileManager()
 

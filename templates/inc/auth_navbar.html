@@ -6,7 +6,7 @@
         </a>
     </li>
     <li class="navbar-brand mr-0" href="{% url 'settings' %}">
-        <img src="{% static "img/teapot1.png" %}" width="35" height="35" loading="lazy">
+        <img src={{request.user.profile.avatar.url}} width="35" height="35" loading="lazy">
     </li>
     <li class="nav-item">
         <a class="nav-link active" href="{% url 'settings' %}">{{request.user.username}}</a>

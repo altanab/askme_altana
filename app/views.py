@@ -1,13 +1,14 @@
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from app.models import Profile, Question
+from app.models import Profile, Question, Tag, LikeDislike, Answer
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from app.forms import LoginForm, AskForm, AnswerForm, RegisterForm, SettingsForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.views.decorators.http import require_POST
 
 def hot_questions(request):
     questions = Question.objects.order_by_rating().all()
@@ -27,6 +28,7 @@ def new_question(request):
             question = form.save(commit=False)
             question.author = request.user.profile
             question.save()
+            tags = form.cleaned_data.get('tags').split()
             return redirect(reverse('question', kwargs={'qid': question.id}))
     return render(request, 'new_question.html', {
         'form': form,
@@ -66,7 +68,7 @@ def signup(request):
     if request.method == 'GET':
         form = RegisterForm()
     elif request.method == 'POST':
-        form = RegisterForm(data=request.POST)
+        form = RegisterForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
@@ -89,7 +91,7 @@ def settings(request):
     if request.method == 'GET':
         form = SettingsForm(instance=request.user)
     elif request.method == 'POST':
-        form = SettingsForm(data=request.POST, instance=request.user)
+        form = SettingsForm(data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid():
             form.save()
     return render(request, 'settings.html', {
@@ -160,3 +162,33 @@ def paginate(objects_list, request, per_page=10):
     except EmptyPage:
         objects = paginator.page(1)
     return objects
+
+
+def login_required_ajax(view):
+    def view2(request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return view(request, *args, **kwargs)
+        elif request.is_ajax():
+            return HttpResponse(status=401)
+        else:
+            redirect('/login/?next=' + request.get_full_path())
+    return view2
+
+
+@require_POST
+@login_required_ajax
+def vote(request):
+    data = request.POST
+    if data.get('type') == 'question':
+        object = Question.objects.get(id=data.get('qid'))
+        old_vote = LikeDislike.objects.filter(user__id=request.user.id).filter(question__id=data.get('qid'));
+    elif data.get('type') == 'answer':
+        object = Answer.objects.get(id=data.get('qid'))
+        old_vote = LikeDislike.objects.filter(user__id=request.user.id).filter(answer__id=data.get('qid'));
+    vote = True if data.get('action') == 'like' else False
+    if old_vote.exists():
+        old_vote[0].delete()
+    v = LikeDislike(user=request.user, like=vote, content_object=object)
+    v.save()
+    object.save()
+    return JsonResponse({'rating': object.rating})
